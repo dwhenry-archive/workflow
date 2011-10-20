@@ -1,0 +1,8 @@
+.project_name Project name: #{@name}
+.ruby_version Ruby version: #{@ruby_version}
+.gems
+  Gems:
+  %ul
+    - @gems.each do |gem|
+      %li= gem
+
