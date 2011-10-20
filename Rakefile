@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'rspec/core/rake_task'
-
+require 'ruby-debug'
 task :default => :test
 task :test => :spec
 
@@ -16,17 +16,22 @@ else
 end
 
 namespace :db do
-  desc 'Auto-migrate the database (destroys data)'
+  desc 'Migrate the database'
   task :migrate => :environment do
-    DataMapper.auto_migrate!
+    `sequel -m db/migrations #{DB.url}`
   end
 
-  desc 'Auto-upgrade the database (preserves data)'
-  task :upgrade => :environment do
-    DataMapper.auto_upgrade!
+  desc 'Rollback the database'
+  task :rollback => :environment do
+    migrations = DB[:schema_info]
+    migration = [migrations.first[:version] - 1, 0].max
+    `sequel -m db/migrations #{DB.url} -M #{migration}`
   end
+
+  desc 'Redo the last migration'
+  task :redo => [:rollback, :migrate]
 end
 
 task :environment do
-  require File.join(File.dirname(__FILE__), 'environment')
+  require File.join(File.dirname(__FILE__), 'lib', 'workflow')
 end

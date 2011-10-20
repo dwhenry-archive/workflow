@@ -7,6 +7,7 @@ SiteConfig = OpenStruct.new(
 module Workflow
   class Routes < Sinatra::Base
     configure do |config|
+      
       # mongo_env = YAML.load_file(File.join(File.dirname(__FILE__) ,'..', '..', 'config', 'mongoid.yml'))[config.environment.to_s]
       # Mongoid.config do |config|
       #   mongo_connection = Mongo::Connection.new(mongo_env["host"]).db(mongo_env["database"])

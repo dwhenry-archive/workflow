@@ -5,7 +5,8 @@ module Workflow
 
       namespace '/process' do
         get '' do
-          haml :'tasks/index'
+          @processes = Workflow::Process.all
+          haml :'process/index'
         end
         
         get '/:id/show' do
