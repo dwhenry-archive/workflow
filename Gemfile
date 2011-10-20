@@ -4,7 +4,6 @@ gem 'sinatra-namespace'
 gem 'rake'
 gem 'sequel'
 gem 'pg'
-gem 'ruby-debug19'
 # gem 'dm-core'
 # gem 'dm-sqlite-adapter'
 # gem 'dm-timestamps'
@@ -16,4 +15,5 @@ gem 'haml'
 group :test do
   gem 'rspec', :require => 'spec'
   gem 'rack-test'
+  gem 'ruby-debug19'
 end
