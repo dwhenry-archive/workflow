@@ -9,6 +9,7 @@ require 'sequel'
 # require 'airbrake'
 
 require 'workflow/workflow'
-require 'workflow/routes'
+require 'workflow/process'
+require 'routes'
 
 DB = Sequel.connect(ENV['DATABASE_URL'] || 'postgres://localhost/workflow')

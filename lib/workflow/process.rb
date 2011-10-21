@@ -1,4 +1,3 @@
-module Workflow
-  class Process
-  end
+class Process
+
 end

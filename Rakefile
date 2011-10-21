@@ -1,19 +1,23 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'rspec/core/rake_task'
-require 'ruby-debug'
-task :default => :test
-task :test => :spec
+begin
+  require 'rspec/core/rake_task'
 
-if !defined?(RSpec)
-  puts "spec targets require RSpec"
-else
-  desc "Run all examples"
-  RSpec::Core::RakeTask.new(:spec) do |t|
-    #t.pattern = 'spec/**/*_spec.rb' # not needed this is default
-    t.rspec_opts = ['-cfs']
+  task :default => :test
+  task :test => :spec
+
+  if !defined?(RSpec)
+    puts "spec targets require RSpec"
+  else
+    desc "Run all examples"
+    RSpec::Core::RakeTask.new(:spec) do |t|
+      #t.pattern = 'spec/**/*_spec.rb' # not needed this is default
+      t.rspec_opts = ['-cfs']
+    end
   end
+rescue
 end
+
 
 namespace :db do
   desc 'Migrate the database'
@@ -30,6 +34,12 @@ namespace :db do
 
   desc 'Redo the last migration'
   task :redo => [:rollback, :migrate]
+  
+  desc 'Redo all the migration'
+  task :restart => :environment do
+    `sequel -m db/migrations #{DB.url} -M 0`
+    `sequel -m db/migrations #{DB.url}`
+  end
 end
 
 task :environment do

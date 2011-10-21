@@ -4,6 +4,8 @@ Sequel.migration do
       primary_key :id
       String :name
       String :description
+      Integer :workflow_id
+      String :position
       # Float
     end
   end

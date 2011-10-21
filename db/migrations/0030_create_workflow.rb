@@ -1,13 +1,12 @@
 Sequel.migration do
   up do
-    create_table :tasks do
+    create_table :workflow do
       primary_key :id
       String :name
       String :description
-      Integer :process_id
     end
   end
   down do
-    drop_table(:tasks)
+    drop_table(:workflow)
   end
 end
