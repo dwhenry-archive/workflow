@@ -1,0 +1,15 @@
+development:
+  adapter: postgresql
+  database: workflow_development
+
+test: &test
+  adapter: postgresql
+  database: workflow_test
+  min_messages: WARNING
+
+production:
+  adapter: postgresql
+  database: workflow_production
+
+cucumber:
+  <<: *test
