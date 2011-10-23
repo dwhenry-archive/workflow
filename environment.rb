@@ -13,4 +13,4 @@ module Db
   end
 end
 
-DB = Sequel.connect(ENV['DATABASE_URL'] || "postgres://localhost/#{Db.name}")
+DB = Sequel.connect(ENV['DATABASE'] || "postgres://localhost/#{Db.name}")
