@@ -28,10 +28,17 @@ body
       .row
         padding: 5px 0
       
+    .input
+      input[type='text']
+        width: 200px
+
+      textarea
+        width: 204px
+
     .input, .display
       .row
         overflow: hidden
-        padding: 5px 0
+        padding: 5px
         
         .header
           text-align: center
@@ -42,10 +49,11 @@ body
           width: 200px
           float: left
           color: #AAA
-        .value
-          width: 400px
-          float: left
           
+        .value
+          width: 387px
+          float: left
+      
       #field-errors
         margin: 10px auto
         padding: 10px
@@ -69,6 +77,13 @@ body
       margin-left: -3px
       border-left: solid 3px #000
       float: left
+      
+      .task
+        width: 200px
+        border: solid 1px black
+        padding: 5px
+        -moz-border-radius: 5px
+        border-radius: 5px
 
   #footer
     padding: 0

@@ -21,3 +21,17 @@ end
 World do
   WorkflowWorld.new
 end
+
+Before do 
+  DB.tables.each do |table| 
+    DB[table].delete 
+  end 
+end
+
+# Around does not wrap Background tasks.. only the Scenario tasks.. Fail..
+# Around('~@javascript') do |scenario, block|
+#   Sequel::Model.db.transaction do 
+#     block.call 
+#     raise Sequel::Error::Rollback 
+#   end 
+# end

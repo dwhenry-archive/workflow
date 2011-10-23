@@ -14,6 +14,7 @@
           Workflow
         .value
           = @task.workflow.name
+          = f.hidden_field :workflow_id
       .row
         .field
           = f.label :name
@@ -21,9 +22,9 @@
           = f.text_field :name
       .row
         .field
-          = f.label :description
+          = f.label :definition
         .value
-          = f.text_field :description
+          = f.text_area :definition
       .row
         .field
           &nbsp;

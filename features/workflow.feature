@@ -11,7 +11,6 @@ Feature: Workflow
     When I view workflow "Test Workflow"
     Then I should see workflow for "Test Workflow"
     
-  @wip
   Scenario: Edit an existing workflow
     Given I have a workflow "Test Workflow"
     And I am on the "Test Workflow" workflow page

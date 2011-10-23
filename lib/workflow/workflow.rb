@@ -1,4 +1,6 @@
 class Workflow
+  include SaveToModel
+  
   attr_accessor :id, :name, :description, :errors
   def self.all
     MyModels::Workflow.all.map do |wf|
@@ -22,10 +24,14 @@ class Workflow
     @errors = []
   end
   
+  def tasks
+    MyModels::Task.filter({:workflow_id => @id}).map do |task|
+      Task.new({:name => task.name, :workflow => self})
+    end 
+  end
+  
   def save
-    model = MyModels::Workflow.new(:name => self.name, :description => self.description)
-    return true if model.save
-    @errors = model.errors
-    return false
+    save_to_model(MyModels::Workflow, [:name, :description])
   end
 end
+

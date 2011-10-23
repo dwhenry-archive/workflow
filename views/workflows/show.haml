@@ -2,3 +2,6 @@
   = render :haml, :'workflows/_column'
 
 #workspace
+  - @workflow.tasks.each do |task|
+    .task
+      = task.name
