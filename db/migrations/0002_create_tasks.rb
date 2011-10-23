@@ -4,7 +4,7 @@ Sequel.migration do
       primary_key :id
       String :name
       String :description
-      Integer :process_id
+      Integer :workflow_id
     end
   end
   down do

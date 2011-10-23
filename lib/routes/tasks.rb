@@ -1,22 +1,13 @@
 class Routes
-  class Tasks < Sinatra::Base
-    register Sinatra::Namespace
-
-    namespace '/tasks' do
-      get '' do
-        haml :'tasks/index'
-      end
-      
-      get '/new' do
-        haml 'new record??'
+  class Tasks < SinatraBaseWithHelper
+    namespace '/workflows/:id/tasks' do
+      get '/new' do |workflow_id|
+        @workflow = Workflow.find(workflow_id)
+        haml :'/tasks/new'
       end
       
       post '/create' do
         haml 'create'
-      end
-      
-      get '/show/:id' do
-        haml 'show'
       end
       
       get '/edit/:id' do

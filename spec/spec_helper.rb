@@ -11,6 +11,7 @@ Sinatra::Base.set :run, false
 Sinatra::Base.set :raise_errors, true
 Sinatra::Base.set :logging, false
 
+require File.join(File.dirname(__FILE__), '../environment')
 require File.join(File.dirname(__FILE__), '../lib/workflow')
 
 

@@ -1,0 +1,22 @@
+.input
+  .row
+    .header
+      New Workflow
+
+  - form_for @workflow, '/workflows' do |f|
+    = f.error_messages
+    .row
+      .field
+        = f.label :name
+      .value
+        = f.text_field :name
+    .row
+      .field
+        = f.label :description
+      .value
+        = f.text_field :description
+    .row
+      .field
+        &nbsp;
+      .value
+        = f.submit 'Create'

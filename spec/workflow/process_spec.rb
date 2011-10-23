@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Workflow::Process do
+describe Process do
   
 end

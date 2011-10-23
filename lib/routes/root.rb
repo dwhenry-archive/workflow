@@ -3,7 +3,7 @@ class Routes
     set :public, 'public/'
 
     get '/application.css' do
-      sass :style
+      sass :'stylesheets/application'
     end
 
     get '/' do

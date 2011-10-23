@@ -1,23 +1,50 @@
+require File.join(File.dirname(__FILE__), 'environment.rb')
 require 'rubygems'
 require 'bundler/setup'
+require 'rake'
+
+task :default => [:test, :features]
+task :test => :spec
+
 begin
   require 'rspec/core/rake_task'
 
-  task :default => :test
-  task :test => :spec
-
-  if !defined?(RSpec)
-    puts "spec targets require RSpec"
-  else
-    desc "Run all examples"
-    RSpec::Core::RakeTask.new(:spec) do |t|
-      #t.pattern = 'spec/**/*_spec.rb' # not needed this is default
-      t.rspec_opts = ['-cfs']
-    end
+  desc "Run all examples"
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    #t.pattern = 'spec/**/*_spec.rb' # not needed this is default
+    t.rspec_opts = ['-cfs']
   end
-rescue
+rescue LoadError
+  desc "Rspec rake task not available"
+  task :spec do
+    abort 'Spec rake task is not available. Be sure to install spec as a gem or plugin'
+  end
 end
 
+begin
+  require 'cucumber'
+  require 'cucumber/rake/task'
+
+  Cucumber::Rake::Task.new(:features) do |t|
+    t.cucumber_opts = "--format pretty"
+  end
+  
+  Cucumber::Rake::Task.new(:'cucumber:wip') do |t|
+    t.cucumber_opts = "--tags @wip --format pretty"
+  end
+  
+  task :features => :'db:test:prepare'
+  task :'features:wip' => :'db:test:prepare'
+  
+  task :cucumber => :features
+  task :'cucumber:wip' => :'features:wip'
+  
+rescue LoadError
+  desc 'Cucumber rake task not available'
+  task :features do
+    abort 'Cucumber rake task is not available. Be sure to install cucumber as a gem or plugin'
+  end
+end
 
 namespace :db do
   desc 'Migrate the database'
@@ -39,6 +66,15 @@ namespace :db do
   task :restart => :environment do
     `sequel -m db/migrations #{DB.url} -M 0`
     `sequel -m db/migrations #{DB.url}`
+  end
+  
+  namespace :test do
+    task :prepare do
+      print "\nDumping Database Schema (#{Db.name('development')})..\n"
+      `pg_dump -h localhost --format=t #{Db.name('development')} > db/schema.sql`
+      print "Restoring Database Schema (#{Db.name('test')})..\n\n"
+      `pg_restore -c -s -h localhost -d #{Db.name('test')} db/schema.sql`
+    end
   end
 end
 

@@ -1,0 +1,9 @@
+#column
+  .row
+    Workflow
+  - @workflows.each do |workflow|
+    .row
+    = link_to workflow.name, "/workflows/#{workflow.id}"
+
+  .row
+    = link_to 'New Workflow', "/workflows/new"

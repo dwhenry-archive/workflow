@@ -1,3 +1,3 @@
-class Process
+class ProcessA
 
 end

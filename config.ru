@@ -1,4 +1,5 @@
 require 'rubygems'
+require File.join(File.dirname(__FILE__), 'environment')
 require File.join(File.dirname(__FILE__), 'lib', 'workflow.rb')
 
 set :run, false
@@ -9,4 +10,4 @@ set :environment, :production
 # $stdout.reopen(log)
 # $stderr.reopen(log)
 
-run Workflow::Routes
+run Routes

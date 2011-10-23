@@ -1,0 +1,31 @@
+#column
+  = render :haml, :'workflows/_column'
+
+#workspace
+  .input
+    .row
+      .header
+        New Task
+
+    - form_for @task, "/workflows/#{@workflow.id}/tasks" do |f|
+      = f.error_messages
+      .row
+        .field
+          Workflow
+        .value
+          = @task.workflow.name
+      .row
+        .field
+          = f.label :name
+        .value
+          = f.text_field :name
+      .row
+        .field
+          = f.label :description
+        .value
+          = f.text_field :description
+      .row
+        .field
+          &nbsp;
+        .value
+          = f.submit 'Create'

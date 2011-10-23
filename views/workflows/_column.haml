@@ -1,0 +1,17 @@
+.row
+  = link_to 'Workflows', "/workflows"
+
+.row.workflow
+  Name:
+  %br
+  = @workflow.name
+
+.row
+  Description:
+  %br
+  = @workflow.description
+
+.row
+  = link_to "Edit Workflow", "/workflows/#{@workflow.id}/edit"
+.row
+  = link_to "Add Task", "/workflows/#{@workflow.id}/tasks/new"
