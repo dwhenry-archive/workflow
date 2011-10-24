@@ -3,6 +3,7 @@ Sequel.migration do
     create_table :tasks do
       primary_key :id
       String :name
+      String :position
       Integer :workflow_id
     end
   end

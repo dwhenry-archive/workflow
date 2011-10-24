@@ -9,7 +9,7 @@ class Routes
       
       post '' do
         @workflow = Workflow.find(params[:workflow_id])
-        @task = Task.new(params[:task])
+        @task = @workflow.add_task(params[:task])
         if @task.save
           haml :'workflows/show'
         else

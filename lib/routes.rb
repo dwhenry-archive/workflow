@@ -31,9 +31,6 @@ class Routes < Sinatra::Base
   require 'routes/workflows'
   use Workflows
 
-  require 'routes/process'
-  use Process
-
 end
 
 

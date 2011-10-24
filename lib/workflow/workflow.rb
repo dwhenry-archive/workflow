@@ -24,9 +24,21 @@ class Workflow
     @errors = []
   end
   
+  def add_task(params)
+    last_task = tasks.sort_by(&:top).last
+    if last_task
+      position = {:position => "#{last_task.left},#{last_task.top + 40}"}
+    else
+      position = {}
+    end
+    task = Task.new(params.merge(position))
+    tasks << task
+    task
+  end
+  
   def tasks
-    MyModels::Task.filter({:workflow_id => @id}).map do |task|
-      Task.new({:name => task.name, :workflow => self})
+    @tasks = MyModels::Task.filter({:workflow_id => @id}).map do |task|
+      Task.new({:name => task.name, :workflow => self, :position => task.position})
     end 
   end
   

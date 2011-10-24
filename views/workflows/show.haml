@@ -3,5 +3,5 @@
 
 #workspace
   - @workflow.tasks.each do |task|
-    .task
+    .task{:style => "top: #{task.top}px; left: #{task.left}px;"}
       = task.name
