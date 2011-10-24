@@ -17,12 +17,17 @@ class Routes
         end
       end
       
-      get '/edit/:id' do
+      get '/:id/edit' do
         haml 'edit'
       end
       
-      put '/update/:id' do
+      put '/:id/update' do
         haml 'update'
+      end
+      
+      get '/:id/position' do
+        @task = Task.find(params[:id])
+        @task.set_position(params[:x], params[:y])
       end
     end
   end

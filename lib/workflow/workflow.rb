@@ -38,8 +38,16 @@ class Workflow
   
   def tasks
     @tasks = MyModels::Task.filter({:workflow_id => @id}).map do |task|
-      Task.new({:name => task.name, :workflow => self, :position => task.position})
+      Task.new({:id => task.id, :name => task.name, :workflow => self, :position => task.position})
     end 
+  end
+  
+  def tasks_height
+    tasks.map(&:top).max + 40
+  end
+  
+  def tasks_width
+    tasks.map(&:left).max + 160
   end
   
   def save

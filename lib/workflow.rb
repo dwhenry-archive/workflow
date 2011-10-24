@@ -13,7 +13,9 @@ require 'helpers/save_to_model'
 
 require 'workflow/workflow'
 require 'workflow/task'
+
 require 'routes'
+require 'workflow/parser'
 
 require 'my_models'
 

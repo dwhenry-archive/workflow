@@ -2,6 +2,17 @@
   = render :haml, :'workflows/_column'
 
 #workspace
-  - @workflow.tasks.each do |task|
-    .task{:style => "top: #{task.top}px; left: #{task.left}px;"}
-      = task.name
+  .scrollable{:style => "height: #{@workflow.tasks_height}px; width: #{@workflow.tasks_width}px;"}
+    - @workflow.tasks.each do |task|
+      .task{:style => "top: #{task.top}px; left: #{task.left}px;", "data-url" => "/workflows/#{@workflow.id}/tasks/#{task.id}/position"}
+        = task.name
+        
+:javascript
+  $(document).ready(function() {
+    $(".task").draggable({
+      stop: function(event, ui) { 
+        var element = event.target;
+        $.ajax($(element).data('url') + '?x=' + (element.offsetLeft + 3) + '&y=' + element.offsetTop)
+      }
+    });
+  });
