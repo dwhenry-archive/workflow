@@ -29,52 +29,62 @@ module Parser
     
     class Ast
       def initialize
-        @tree = {}
+        @tree = []
       end
       
       def to_hash
         @hash = {}
-        @tree.each do |key, value|
-          if value.respond_to?(:to_hash)
-            @hash[key] = value.to_hash
-          else
-            @hash[key] = value
-          end
+        @tree.each do |node|
+          @hash.merge! node.to_hash
         end
         @hash
       end
       
       def to_s
-        @tree.map do |key, value|
-          if value.respond_to?(:to_hash)
-            value.to_s
-          else
-            "#{key} => #{value}"
-          end
-        end.join("\n")
+        @tree.map(&:to_s).join("\n")
       end
+      
+      def add(node)
+        @tree << node
+        @tree.last
+      end
+      protected :add
     end
     
     class AstRoot < Ast
       def start
-        @tree[:start] = AstStart.new
+        add AstStart.new
       end  
     end
     
     class AstStart < Ast
       def at
-        self
+        add AstTime.new
+      end
+
+      def to_hash
+        {:start => super}
+      end
+      
+      def to_s
+        "START #{@tree.map(&:to_s).join(' ')}"
+      end
+    end
+    
+    class AstTime
+      def to_s
+        "at #{@time}"
+      end
+      
+      def to_hash
+        {:time => @time}
       end
       
       def method_missing(mth, *args, &blk)
         if mth.to_s =~ /^(1|)\d(a|p)m$/ 
-          @tree[:time] = mth.to_s
+          @time = mth.to_s
           return self
         end
-      end
-      
-      def to_s
-        "START at #{@tree[:time]}"
       end
     end
   end
